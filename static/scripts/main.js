@@ -12,12 +12,14 @@ $('.landing-page__button').click(function() {
 // user info flow
 $('.info__button--inactive').click(function(event) {
   $('.info__button--inactive').hide();
-  const infoChoice = this.innerText;
   const infoDynamicTitle = document.createElement('h3');
-  infoDynamicTitle.innerText = 'How much is your ' + this.innerText + '?';
-  $('.info-dynamic-title').hide();
+
+  infoDynamicTitle.innerText = 'How much is your purchase' + '?';
+  $('.info__title').hide();
   $('#info').prepend(infoDynamicTitle);
-  $('.info__input').fadeIn();
+
+  $('.info-dollar-sign').css('display', 'inline').fadeIn();
+  $('.info__input').css('display', 'inline').fadeIn();
   $('.info__button-submit').fadeIn();
 });
 
@@ -47,8 +49,8 @@ $('.landing-page__submit-button').click(function() {
         console.log(amtBorrowed);
 
         var upperLimit = ProcessApiCalls(debitNumber);
-        
-        var data = { 
+
+        var data = {
           upperLimit: upperLimit,
           purchaseType: purchaseType,
           amtBorrowed: amtBorrowed
@@ -63,14 +65,14 @@ $('.landing-page__submit-button').click(function() {
             success : function(result) {
               if (Array.isArray(result))
                 console.log(result)
-              else 
-                console.log(result) 
- 
+              else
+                console.log(result)
+
               $('#info').hide();
               $('#suggestions').show();
               $('#charts').show();
-        
-              
+
+
               var ctx = $("#lineChart");
               var myChart = new Chart(ctx, {
                   type: 'line',
@@ -79,7 +81,7 @@ $('.landing-page__submit-button').click(function() {
 
                   }
               });
-              
+
               var ctx2 = $("#pieChart");
               var myDoughnutChart = new Chart(ctx2, {
                   type: 'doughnut',
@@ -93,13 +95,17 @@ $('.landing-page__submit-button').click(function() {
               $('#expenses').text('$' +window.final_chart_data.expenses);
               $('#net-income').text('$' +window.final_chart_data.net_income);
               if (Array.isArray(result)) {
-                for (var index in result) 
-                  $('.suggestions__list').append('<li>'+ result[index] +'</li>')
+                var suggestionsContent = document.querySelectorAll('.suggestions__list__dynamic-content');
+                result.forEach(function(content, i) {
+                  console.log(content);
+                  suggestionsContent[i].innerText += content;
+                });
+                $('.customer-name').text(window.name);
               }
               else {
                 $('.suggestions__list').append('<li>'+ result+'</li>')
               }
-              
+
             },
             error: function(result) {
                console.log(result);

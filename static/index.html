@@ -21,36 +21,74 @@
   </section>
 
   <section id="info" >
-    <h3 class="info-dynamic-title">What are you <span class="info__dynamic-text">purchasing?</span></h3>
+    <h3 class="info__title">What are you purchasing?</span></h3>
     <div class="info__buttons">
       <button class="info__button--inactive">House</button>
       <button class="info__button--inactive">Car</button>
       <button class="info__button--inactive">Other</button>
-      <input class="info__input" type="number">
+      <div class="info__input-container">
+        <p class="info-dollar-sign">$</p><input class="info__input" type="number" placeholder="500000">
+      </div>
       <button class="info__button-submit">Submit</button>
     </div>
   </section>
 
   <section id="suggestions">
     <div class="suggestions__container">
-      <h2>Hey John! Here are your suggestions.</h2>
+      <h3>Hey <span class="customer-name"></span> Here are your suggestions.</h3>
       <div class="suggestions__list">
-
+        <div class="suggestions__list__container">
+          <div class="suggestions__list__one">
+            <img src="assets/number-one.svg" alt="">
+            <div class="suggestions__list__content">
+              <h4>The <span>best</span> option is a plan with</h4>
+              <li>a <span class="suggestions__list__dynamic-content">$</span> payment per month,</li>
+              <li>a <span class="suggestions__list__dynamic-content"></span> year <span class="suggestions__list__dynamic-content"></span> rate,</li>
+              <li>and a <span class="suggestions__list__dynamic-content"></span> interest rate.</li>
+            </div>
+          </div>
+        </div>
+        <div class="suggestions__list__container suggestions__list__container--secondary">
+          <div class="suggestions__list__two">
+            <img src="assets/number-two.svg" alt="">
+            <div class="suggestions__list__content">
+              <h4>The <span>second</span> option is a plan with</h4>
+              <li>a <span class="suggestions__list__dynamic-content">$</span> payment per month,</li>
+              <li>a <span class="suggestions__list__dynamic-content"></span> year <span class="suggestions__list__dynamic-content"></span> rate,</li>
+              <li>and a <span class="suggestions__list__dynamic-content">5</span> interest rate.</li>
+            </div>
+          </div>
+          <div class="suggestions__list__three">
+            <img src="assets/number-three.svg" alt="">
+            <div class="suggestions__list__content">
+              <h4>The <span>third</span> option is a plan with</h4>
+              <li>a <span class="suggestions__list__dynamic-content">$</span> payment per month,</li>
+              <li>a <span class="suggestions__list__dynamic-content">5</span> year <span class="suggestions__list__dynamic-content"></span> rate,</li>
+              <li>and a <span class="suggestions__list__dynamic-content">5</span> interest rate.</li>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="suggestions__footer">
         <p>Wonder why these options were suggested? <span class="suggestions__footer-link"><a href="#suggestions__charts">Find out now.</a></span></p>
       </div>
     </div>
   </section>
+
   <section id="charts">
-    <h2>Here's why.</h2>
-    <div id="pieChartArea">
-        <canvas id="pieChart" width="500" height="200"></canvas>
-    </div>
-    <div id="lineChartArea">
-        <canvas id="lineChart" width="500" height="200"></canvas>
+    <h2>Here's why,</h2>
+    <div class="charts-one-two">
+      <div id="pieChartArea" class="charts__inline-charts">
+          <h4>Annual Expenditure Breakdown</h4>
+          <canvas id="pieChart" width="500" height="200"></canvas>
+      </div>
+      <div id="lineChartArea" class="charts__inline-charts">
+          <h4>Net Monthly Income</h4>
+          <canvas id="lineChart" width="500" height="200"></canvas>
+      </div>
     </div>
 
+    <h4>Annual Data Summary</h4>
     <div class="chart-three">
       <div class="chart-three__income">
         <h4>Income</h4>

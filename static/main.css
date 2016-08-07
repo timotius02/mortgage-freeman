@@ -154,6 +154,11 @@ button {
 small {
   font-size: 0.618em; }
 
+li span {
+  color: red;
+  font-weight: 500;
+  text-transform: underline; }
+
 section {
   align-items: center;
   display: flex;
@@ -212,12 +217,16 @@ input {
 #info {
   display: none; }
   #info .info__buttons {
-    margin-top: 25px; }
+    margin-top: 20px; }
     #info .info__buttons .info__button--inactive {
       margin: 0 5px;
       padding: 0.9em 2.7em; }
-  #info input, #info .info__button-submit {
+  #info .info__input-title, #info .info-dollar-sign, #info .info__input, #info .info__button-submit {
     display: none; }
+  #info .info__input {
+    font-size: 1rem;
+    margin-left: 10px;
+    width: 176px; }
   #info .info__button-submit {
     margin-top: 10px;
     width: 200px; }
@@ -228,8 +237,48 @@ input {
   #suggestions .suggestions__list {
     font-size: 1.3em;
     margin-top: 30px; }
-    #suggestions .suggestions__list li {
-      margin-top: 5px; }
+    #suggestions .suggestions__list .suggestions__list__container {
+      border: 2px dashed #333; }
+      #suggestions .suggestions__list .suggestions__list__container .suggestions__list__one {
+        padding: 2em 0 2em 2em; }
+        #suggestions .suggestions__list .suggestions__list__container .suggestions__list__one img {
+          float: left;
+          width: 128px; }
+        #suggestions .suggestions__list .suggestions__list__container .suggestions__list__one li {
+          left: 20px;
+          margin-top: 10px;
+          position: relative; }
+        #suggestions .suggestions__list .suggestions__list__container .suggestions__list__one .suggestions__list__content {
+          position: relative;
+          left: 40px; }
+          #suggestions .suggestions__list .suggestions__list__container .suggestions__list__one .suggestions__list__content span {
+            color: red; }
+    #suggestions .suggestions__list .suggestions__list__container--secondary {
+      border-top: 0;
+      overflow: auto; }
+      #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two,
+      #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__three {
+        display: flex;
+        float: left;
+        font-size: 14px;
+        padding: 2em; }
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two img,
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__three img {
+          height: 64px;
+          width: 64px; }
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two li,
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__three li {
+          font-size: 1rem;
+          margin-top: 5px; }
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two .suggestions__list__content,
+        #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__three .suggestions__list__content {
+          position: static;
+          margin-left: 20px; }
+          #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two .suggestions__list__content span,
+          #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__three .suggestions__list__content span {
+            color: red; }
+      #suggestions .suggestions__list .suggestions__list__container--secondary .suggestions__list__two {
+        border-right: 2px dashed #333; }
   #suggestions .suggestions__footer {
     bottom: 20px;
     left: 50%;
@@ -243,23 +292,32 @@ input {
 
 #charts {
   display: none; }
-  #charts .charts-one-two, #charts .chart-three {
-    margin-top: 50px; }
-    #charts .charts-one-two .charts__inline-charts, #charts .chart-three .charts__inline-charts {
-      display: inline-block;
-      margin: 0 30px;
-      float: left; }
+  #charts .charts-one-two h4, #charts .chart-three h4 {
+    margin-bottom: 15px;
+    text-decoration: underline; }
+  #charts .charts-one-two .charts__inline-charts, #charts .chart-three .charts__inline-charts {
+    display: inline-block;
+    margin: 0 30px;
+    text-align: center;
+    float: left; }
+  #charts h4 {
+    margin-bottom: 15px;
+    text-align: center;
+    text-decoration: underline; }
   #charts .chart-three {
-    border: 2px solid #333; }
+    border: 2px solid #333;
+    margin-bottom: 15px; }
     #charts .chart-three div[class^="chart-three__"] {
       float: left;
       padding: 1em 3em; }
-      #charts .chart-three div[class^="chart-three__"] h4 {
-        text-decoration: underline; }
       #charts .chart-three div[class^="chart-three__"] p {
         margin-top: 5px; }
       @media only screen and (max-width: 700px) {
         #charts .chart-three div[class^="chart-three__"] {
           float: none; } }
+  #charts .chart-three {
+    margin: 15px 0; }
+  #charts .charts-one-two {
+    margin: 40px 0; }
 
 /*# sourceMappingURL=main.css.map */

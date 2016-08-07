@@ -122,7 +122,7 @@ function GetYearAgo() {
 
 var ProcessApiCalls = function (account_number) {
     var all_purchases, all_withdrawals, all_deposits, all_bills, all_categories = {};
-    
+
     var merchants_url = base_url + '/merchants?key=' + api_key;
     var merchants = new Array();
     var mer_promise= ApiCall(merchants_url);
@@ -139,12 +139,12 @@ var ProcessApiCalls = function (account_number) {
     promise.done(function (results) {
         chequing_account_id = GetAccount(results, account_number);
     })
-    
+
     var name = "";
     var customer_url = base_url + '/accounts/'+ chequing_account_id + '/customer?key=' + api_key;
     var customer = ApiCall(customer_url);
     customer.done(function (results) {
-        name = GetName(results);
+        window.name = GetName(results);
     })
 
     var purchases_url = base_url + '/accounts/' + chequing_account_id + '/purchases?key=' + api_key;
@@ -172,7 +172,7 @@ var ProcessApiCalls = function (account_number) {
         all_bills = SumBills(results);
         all_categories["bills"] = all_bills["total"];
     })
-    
+
     var average_monthly_income = GetAverageIncome(all_deposits, [all_purchases, all_withdrawals, all_bills]);
     var net_income_per_month = GetNetMonthlyIncome(all_deposits, [all_purchases, all_withdrawals, all_bills])
     var total_expenses = (all_purchases["total"] + all_withdrawals["total"] + all_bills["total"]);
@@ -209,7 +209,7 @@ var ProcessApiCalls = function (account_number) {
             }
         ]
     };
-    
+
     window.data2 = {
         labels: [
             "Food",
