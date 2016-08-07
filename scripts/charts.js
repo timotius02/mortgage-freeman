@@ -1,25 +1,22 @@
-// line chart
-
-
 var ctx = $("#lineChart");
 var data = {
-    labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
     datasets: [
         {
             label: "Net Monthly Income",
             fill: false,
             lineTension: 0,
-            backgroundColor: "rgba(75,192,192,0.4)",
-            borderColor: "rgba(75,192,192,1)",
+            backgroundColor: "red",
+            borderColor: "red",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "rgba(75,192,192,1)",
+            pointBorderColor: "red",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: "rgba(75,192,192,1)",
+            pointHoverBackgroundColor: "red",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
             pointRadius: 1,
@@ -34,29 +31,36 @@ var myChart = new Chart(ctx, {
     type: 'line',
     data: data,
     options: {
-        
+
     }
 });
 
 var ctx2 = $("#pieChart");
 var data2 = {
     labels: [
-        "Red",
-        "Blue",
-        "Yellow"
+        "Food",
+        "Groceries",
+        "Shopping",
+        "Entertainment",
+        "Withdrawls",
+        "Bills"
     ],
     datasets: [
         {
-            data: [300, 50, 100],
+            data: [300, 50, 100, 90, 200],
             backgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
+                "#FFB3BA",
+                "#BAE1FF",
+                "#FFFFBA",
+                "#BAFFC9",
+                "#FFDFBA",
             ],
             hoverBackgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
+                "#ff808c",
+                "#80c8ff",
+                "#ffff80",
+                "#80ff9b",
+                "#ffc380"
             ]
         }]
 };
