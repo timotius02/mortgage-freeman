@@ -8,7 +8,7 @@ listofperiods = [5, 10, 15, 20, 25, 30]
 fiveyradjrate = 0.03456
 sevenyradjrate = 0.03412
 amtborrowed = 450000  # specified by user input
-upperlimit = 1500  # results from client data
+upperlimit = 2500  # results from client data
 
 # v is a dictionary of discount rates with
 #    the keys being the rates and values being
@@ -56,6 +56,14 @@ fixedpayments.sort()
 adjpayments.sort()
 
 fixedfinalretval = list(filter(lambda x: x[0] <= upperlimit, list(fixedpayments)))[-3:]
-print(fixedfinalretval)
+for i in fixedfinalretval:
+    print("Your monthly payment would be %.2f, with a %d-year fixed rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
+
+
+#print(fixedfinalretval)
 adjpaymentsfinal = list(filter(lambda x: x[0] <= upperlimit, list(adjpayments)))
-print(adjpayments)
+#print(adjpayments)
+final = fixedfinalretval + adjpayments
+final.sort()
+listfinal = list(filter(lambda x: x[0] <= upperlimit, list(final)))[-3:]
+print(listfinal)
