@@ -5,8 +5,10 @@ fixedplans = namedtuple("fixedplans", "discrate irate period")
 listofinterestrates = [0.0275, 0.03375, 0.02875, 0.03, 0.03875, 0.04, 0.04125, 0.0425, 0.04375, 0.045, 0.04625, 0.0475,
                        0.04875, 0.05]
 listofperiods = [5, 10, 15, 20, 25, 30]
-fiveyradjrate = 0.03456
-sevenyradjrate = 0.03412
+fiveyradjrate40k = 0.03456
+sevenyradjrate40k = 0.03412
+fiveyradjrate60k = 0.03474
+sevenyradjrate60k = 0.03443
 amtborrowed = 450000  # specified by user input
 upperlimit = 2500  # results from client data
 
@@ -31,9 +33,10 @@ for i in v:
 #print(fixedfinalretval)
 
 adjpayments = []
-adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + 0.03456) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
-adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + 0.03412) ** 30))/12, "with a 7-year Adjustable plan starting at 2.875%"])
-
+adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
+adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.875%"])
+adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.875%"])
+adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
 
 
 def insurancetype(purchase):
