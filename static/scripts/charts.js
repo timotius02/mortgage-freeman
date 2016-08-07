@@ -6,17 +6,17 @@ var data = {
             label: "Net Monthly Income",
             fill: false,
             lineTension: 0,
-            backgroundColor: "red",
-            borderColor: "red",
+            backgroundColor: "#da253d",
+            borderColor: "#da253d",
             borderCapStyle: 'butt',
             borderDash: [],
             borderDashOffset: 0.0,
             borderJoinStyle: 'miter',
-            pointBorderColor: "red",
+            pointBorderColor: "#da253d",
             pointBackgroundColor: "#fff",
             pointBorderWidth: 1,
             pointHoverRadius: 5,
-            pointHoverBackgroundColor: "red",
+            pointHoverBackgroundColor: "#da253d",
             pointHoverBorderColor: "rgba(220,220,220,1)",
             pointHoverBorderWidth: 2,
             pointRadius: 1,
@@ -47,20 +47,22 @@ var data2 = {
     ],
     datasets: [
         {
-            data: [300, 50, 100, 90, 200],
+            data: [300, 50, 100, 90, 200, 250],
             backgroundColor: [
-                "#FFB3BA",
-                "#BAE1FF",
-                "#FFFFBA",
-                "#BAFFC9",
-                "#FFDFBA",
+                "#da253d",
+                "#56AEE2",
+                "#e2cf56",
+                "#56E289",
+                "#8A56E2",
+                "#E28956"
             ],
             hoverBackgroundColor: [
-                "#ff808c",
-                "#80c8ff",
+                "#E25668",
+                "#2598da",
                 "#ffff80",
-                "#80ff9b",
-                "#ffc380"
+                "#25da67",
+                "#6725da",
+                "#da6725"
             ]
         }]
 };

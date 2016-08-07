@@ -238,9 +238,12 @@ input {
       #suggestions .suggestions__footer a:hover {
         text-decoration: underline; }
 
-#charts .charts__inline-charts {
-  display: inline-block;
-  float: left; }
+#charts .charts-one-two, #charts .chart-three {
+  margin-top: 50px; }
+  #charts .charts-one-two .charts__inline-charts, #charts .chart-three .charts__inline-charts {
+    display: inline-block;
+    margin: 0 30px;
+    float: left; }
 #charts .chart-three {
   border: 2px solid #333; }
   #charts .chart-three div[class^="chart-three__"] {
