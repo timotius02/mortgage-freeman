@@ -9,6 +9,10 @@ fiveyradjrate40k = 0.03456
 sevenyradjrate40k = 0.03412
 fiveyradjrate60k = 0.03474
 sevenyradjrate60k = 0.03443
+fiveyrfedsmedian = 0.0371
+fiveyrfedsmode = 0.0296
+fiveyradjrate40k *= fiveyrfedsmode/fiveyrfedsmedian
+fiveyradjrate60k += fiveyrfedsmode/fiveyrfedsmedian
 #amtborrowed = 450000  # specified by user input
 #upperlimit = 2500  # results from client data
 
@@ -36,10 +40,10 @@ def fixrate(amtborrowed):
 
 def adjrate(amtborrowed):
     adjpayments = []
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
-    adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.88%"])
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.88%"])
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
+    adjpayments.append([(amtborrowed * fiveyradjrate40k / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
+    adjpayments.append([(amtborrowed * sevenyradjrate40k / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.88%"])
+    adjpayments.append([(amtborrowed * fiveyradjrate60k / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.88%"])
+    adjpayments.append([(amtborrowed * sevenyradjrate60k / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
     return adjpayments
 
 def insurancetype(purchase, amtborrowed, upperlimit):
