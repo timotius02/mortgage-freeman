@@ -1,7 +1,5 @@
-﻿var api_key = "0b7d0a3d96fef1c82a94ab07d65695af";
-var customer_id = "57a63a23bc727e4b519f1fff";
+var api_key = "1d8849cbf874b8e5a4d2431bc879359b";
 var base_url = 'http://api.reimaginebanking.com';
-var account_number = "1234567890123456"
 
 function ApiCall(url) { 
     return $.ajax({
@@ -86,7 +84,7 @@ function GetNetMonthlyIncome(positives, negatives) {
     return per_month;
 }
 
-function GetAccount(all_accounts) {
+function GetAccount(all_accounts, account_number) {
     for (var i = 0; i < all_accounts.length; i++) {
         if (all_accounts[i]["account_number"] == account_number) {
             return all_accounts[i]["_id"];
@@ -102,7 +100,7 @@ function GetYearAgo() {
     return  new Date(last_year, todays_month, todays_day);
 }
 
-var data = function () {
+var data = function (account_number) {
     var all_purchases, all_withdrawals, all_deposits, all_bills, all_categories = {};
 
     var merchants_url = base_url + '/merchants?key=' + api_key;
@@ -119,10 +117,8 @@ var data = function () {
     var promise = ApiCall(all_accounts_url);
     var chequing_account_id = '';
     promise.success(function (results) {
-        console.log(results);
-        chequing_account_id = GetAccount(results);
+        chequing_account_id = GetAccount(results,account_number);
     })
-    console.log(chequing_account_id);
 
     var purchases_url = base_url + '/accounts/' + chequing_account_id + '/purchases?key=' + api_key;
     var purchases = ApiCall(purchases_url);
