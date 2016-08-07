@@ -99,7 +99,7 @@ function GetYearAgo() {
     return  new Date(last_year, todays_month, todays_day);
 }
 
-var data = function (account_number) {
+var ProcessApiCalls = function (account_number) {
     var all_purchases, all_withdrawals, all_deposits, all_bills, all_categories = {};
 
     var merchants_url = base_url + '/merchants?key=' + api_key;
