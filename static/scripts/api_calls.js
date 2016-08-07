@@ -1,6 +1,17 @@
 var api_key = "1d8849cbf874b8e5a4d2431bc879359b";
 var base_url = 'http://api.reimaginebanking.com';
 
+var normalizations = {
+    "bills": {
+        11: 0.9,
+        0 : 0.9,
+        1 : 0.9,
+        5 : 0.9,
+        6 : 0.9,
+        7 : 0.9
+    }
+}
+
 function ApiCall(url) {
     return $.ajax({
         url: url,
@@ -27,15 +38,20 @@ function SumProperty(data_array, property, date_type) {
 
 function SumBills(bills) {
     var year_ago = GetYearAgo();
+    var today  =new Date;
     var total = 0.0;
     var months = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     for (var i = 0; i < bills.length; i++) {
         date = new Date(bills[i]["payment_date"] + " 04:00:00");
-        if (date > year_ago) {
+        if (date > year_ago && date <= today) {
             if (bills[i]["status"] == "completed") {
                 var month = date.getMonth();
-                months[month] += parseFloat(bills[i]["payment_amount"]);
-                total += parseFloat(bills[i]["payment_amount"]);
+                var multiplier = 1.0;
+                if (normalizations["bills"][month]) {
+                    multiplier = normalizations["bills"][month];
+                }
+                months[month] += (parseFloat(bills[i]["payment_amount"]) * multiplier);
+                total += (parseFloat(bills[i]["payment_amount"])* multiplier);
             }
         }
     }
