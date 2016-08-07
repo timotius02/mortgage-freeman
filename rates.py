@@ -31,8 +31,8 @@ for i in v:
 #print(fixedfinalretval)
 
 adjpayments = []
-adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + 0.03456) ** 30))/12, "5-year Adjustable starting at 2.75%"])
-adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + 0.03412) ** 30))/12, "7-year Adjustable starting at 2.875%"])
+adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + 0.03456) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
+adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + 0.03412) ** 30))/12, "with a 7-year Adjustable plan starting at 2.875%"])
 
 
 
@@ -56,8 +56,8 @@ fixedpayments.sort()
 adjpayments.sort()
 
 fixedfinalretval = list(filter(lambda x: x[0] <= upperlimit, list(fixedpayments)))[-3:]
-for i in fixedfinalretval:
-    print("Your monthly payment would be %.2f, with a %d-year fixed rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
+#for i in fixedfinalretval:
+#    print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
 
 
 #print(fixedfinalretval)
@@ -66,4 +66,9 @@ adjpaymentsfinal = list(filter(lambda x: x[0] <= upperlimit, list(adjpayments)))
 final = fixedfinalretval + adjpayments
 final.sort()
 listfinal = list(filter(lambda x: x[0] <= upperlimit, list(final)))[-3:]
-print(listfinal)
+
+for i in listfinal:
+    if isinstance(i[1], str):
+        print("Your monthly payment would be %.2f, %s" % (round(i[0], 2), i[1]))
+    else:
+        print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
