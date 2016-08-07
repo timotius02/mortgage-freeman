@@ -1,6 +1,17 @@
 var api_key = "1d8849cbf874b8e5a4d2431bc879359b";
 var base_url = 'http://api.reimaginebanking.com';
 
+var normalizations = {
+    "bills": {
+        11: 0.9,
+        0 : 0.9,
+        1 : 0.9,
+        5 : 0.9,
+        6 : 0.9,
+        7 : 0.9
+    }
+}
+
 function ApiCall(url) {
     return $.ajax({
         url: url,
@@ -27,15 +38,20 @@ function SumProperty(data_array, property, date_type) {
 
 function SumBills(bills) {
     var year_ago = GetYearAgo();
+    var today  =new Date;
     var total = 0.0;
     var months = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     for (var i = 0; i < bills.length; i++) {
         date = new Date(bills[i]["payment_date"] + " 04:00:00");
-        if (date > year_ago) {
+        if (date > year_ago && date <= today) {
             if (bills[i]["status"] == "completed") {
                 var month = date.getMonth();
-                months[month] += parseFloat(bills[i]["payment_amount"]);
-                total += parseFloat(bills[i]["payment_amount"]);
+                var multiplier = 1.0;
+                if (normalizations["bills"][month]) {
+                    multiplier = normalizations["bills"][month];
+                }
+                months[month] += (parseFloat(bills[i]["payment_amount"]) * multiplier);
+                total += (parseFloat(bills[i]["payment_amount"])* multiplier);
             }
         }
     }
@@ -91,6 +107,11 @@ function GetAccount(all_accounts, account_number) {
     }
 }
 
+function GetName(results) {
+    var full_name = {"first_name" : results["first_name"], "last_name" : results["last_name"]};
+    return full_name;
+}
+
 function GetYearAgo() {
     var today = new Date;
     var last_year = today.getFullYear() - 1;
@@ -101,7 +122,7 @@ function GetYearAgo() {
 
 var ProcessApiCalls = function (account_number) {
     var all_purchases, all_withdrawals, all_deposits, all_bills, all_categories = {};
-
+    
     var merchants_url = base_url + '/merchants?key=' + api_key;
     var merchants = new Array();
     var mer_promise= ApiCall(merchants_url);
@@ -117,6 +138,13 @@ var ProcessApiCalls = function (account_number) {
     var chequing_account_id = '';
     promise.done(function (results) {
         chequing_account_id = GetAccount(results, account_number);
+    })
+    
+    var name = "";
+    var customer_url = base_url + '/accounts/'+ chequing_account_id + '/customer?key=' + api_key;
+    var customer = ApiCall(customer_url);
+    customer.done(function (results) {
+        name = GetName(results);
     })
 
     var purchases_url = base_url + '/accounts/' + chequing_account_id + '/purchases?key=' + api_key;

@@ -9,6 +9,10 @@ fiveyradjrate40k = 0.03456
 sevenyradjrate40k = 0.03412
 fiveyradjrate60k = 0.03474
 sevenyradjrate60k = 0.03443
+fiveyrfedsmedian = 0.0371
+fiveyrfedsmode = 0.0296
+fiveyradjrate40k *= fiveyrfedsmode/fiveyrfedsmedian
+fiveyradjrate60k += fiveyrfedsmode/fiveyrfedsmedian
 #amtborrowed = 450000  # specified by user input
 #upperlimit = 2500  # results from client data
 
@@ -36,10 +40,10 @@ def fixrate(amtborrowed):
 
 def adjrate(amtborrowed):
     adjpayments = []
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
-    adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.875%"])
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.875%"])
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
+    adjpayments.append([(amtborrowed * fiveyradjrate40k / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
+    adjpayments.append([(amtborrowed * sevenyradjrate40k / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.88%"])
+    adjpayments.append([(amtborrowed * fiveyradjrate60k / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.88%"])
+    adjpayments.append([(amtborrowed * sevenyradjrate60k / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
     return adjpayments
 
 def insurancetype(purchase, amtborrowed, upperlimit):
@@ -65,14 +69,19 @@ def insurancetype(purchase, amtborrowed, upperlimit):
     retval = []
     for i in listfinal:
         if isinstance(i[1], str):
-            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + i[1])
+            retval.append(round(i[0], 2))
+            retval.append(int(i[1][7]))
+            retval.append("adjustable")
+            retval.append(float(i[1][-5:-1]))
             #print("Your monthly payment would be %.2f, %s" % (round(i[0], 2), i[1]))
         else:
-            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + "with a " + str(i[1][1]) + "-year Fixed Rate of " + str(round(i[1][0]*100, 3)) + "%")
+            retval.append(round(i[0], 2))
+            retval.append(i[1][1])
+            retval.append("fixed")
+            retval.append(round(i[1][0]*100, 2))
             #print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
     return retval
-
-#insurancetype("house")
+print(insurancetype("house", 450000, 2017))
 
 #fixedpayments.sort()
 #adjpayments.sort()
