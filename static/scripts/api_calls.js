@@ -95,7 +95,7 @@ function GetYearAgo() {
     var today = new Date;
     var last_year = today.getFullYear() - 1;
     var todays_month = today.getMonth();
-    var todays_day = today.getDay();
+    var todays_day = today.getDate();
     return  new Date(last_year, todays_month, todays_day);
 }
 
