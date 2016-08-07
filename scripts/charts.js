@@ -37,3 +37,33 @@ var myChart = new Chart(ctx, {
         
     }
 });
+
+var ctx2 = $("#pieChart");
+var data2 = {
+    labels: [
+        "Red",
+        "Blue",
+        "Yellow"
+    ],
+    datasets: [
+        {
+            data: [300, 50, 100],
+            backgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ],
+            hoverBackgroundColor: [
+                "#FF6384",
+                "#36A2EB",
+                "#FFCE56"
+            ]
+        }]
+};
+var myDoughnutChart = new Chart(ctx2, {
+    type: 'doughnut',
+    data: data2,
+    options: {
+
+    }
+});
