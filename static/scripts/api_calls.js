@@ -108,7 +108,7 @@ function GetAccount(all_accounts, account_number) {
 }
 
 function GetName(results) {
-    var full_name = {"first_name" : results["first_name"], "last_name" : results["last_name"]};
+    var full_name = results["first_name"];
     return full_name;
 }
 

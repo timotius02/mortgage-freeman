@@ -100,6 +100,7 @@ $('.landing-page__submit-button').click(function() {
                   console.log(content);
                   suggestionsContent[i].innerText += content;
                 });
+                console.log(window.name)
                 $('.customer-name').text(window.name);
               }
               else {
