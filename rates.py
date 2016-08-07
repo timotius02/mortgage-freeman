@@ -65,13 +65,12 @@ def insurancetype(purchase, amtborrowed, upperlimit):
     retval = []
     for i in listfinal:
         if isinstance(i[1], str):
-            retval.append("Your monthly payment would be " + str(round(i[0], 2)) + " " + i[1])
+            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + i[1])
             #print("Your monthly payment would be %.2f, %s" % (round(i[0], 2), i[1]))
         else:
-            retval.append("Your monthly payment would be " + str(round(i[0], 2)) + " " + "with a " + str(i[1][1]) + "-year Fixed Rate of " + str(round(i[1][0], 3)) + "%")
+            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + "with a " + str(i[1][1]) + "-year Fixed Rate of " + str(round(i[1][0]*100, 3)) + "%")
             #print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
     return retval
-
 #insurancetype("house")
 
 #fixedpayments.sort()
