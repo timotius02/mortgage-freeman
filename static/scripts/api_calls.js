@@ -99,13 +99,13 @@ function GetYearAgo() {
     return  new Date(last_year, todays_month, todays_day);
 }
 
-var data = function (account_number) {
+var ProcessApiCalls = function (account_number) {
     var all_purchases, all_withdrawals, all_deposits, all_bills, all_categories = {};
 
     var merchants_url = base_url + '/merchants?key=' + api_key;
     var merchants = new Array();
     var mer_promise= ApiCall(merchants_url);
-    mer_promise.success(function (results) {
+    mer_promise.done(function (results) {
         for (var i = 0; i < results.length; i++) {
             if(results[i]["category"] && results[i]["category"] != "A" && results[i]["category"] != "test") {
                 merchants.push(results[i]);
@@ -115,32 +115,32 @@ var data = function (account_number) {
     var all_accounts_url = base_url + '/accounts?key=' + api_key;
     var promise = ApiCall(all_accounts_url);
     var chequing_account_id = '';
-    promise.success(function (results) {
+    promise.done(function (results) {
         chequing_account_id = GetAccount(results, account_number);
     })
 
     var purchases_url = base_url + '/accounts/' + chequing_account_id + '/purchases?key=' + api_key;
     var purchases = ApiCall(purchases_url);
-    purchases.success(function (results) {
+    purchases.done(function (results) {
         all_purchases = SumProperty(results, "amount","purchase_date");
         all_categories = GetCategories(results, merchants);
     })
     var withdrawals_url = base_url + '/accounts/' + chequing_account_id + '/withdrawals?key=' + api_key;
     var withdrawals = ApiCall(withdrawals_url);
-    withdrawals.success(function (results) {
+    withdrawals.done(function (results) {
         all_withdrawals = SumProperty(results, "amount","transaction_date");
         all_categories["withdrawals"] = all_withdrawals["total"];
     })
 
     var deposits_url = base_url + '/accounts/' + chequing_account_id + '/deposits?key=' + api_key;
     var deposits = ApiCall(deposits_url);
-    deposits.success(function (results) {
+    deposits.done(function (results) {
         all_deposits = SumProperty(results, "amount", "transaction_date");
     })
 
     var bills_url = base_url + '/accounts/' + chequing_account_id + '/bills?key=' + api_key;
     var bills = ApiCall(bills_url);
-    bills.success(function (results) {
+    bills.done(function (results) {
         all_bills = SumBills(results);
         all_categories["bills"] = all_bills["total"];
     })
@@ -148,9 +148,72 @@ var data = function (account_number) {
     var average_monthly_income = GetAverageIncome(all_deposits, [all_purchases, all_withdrawals, all_bills]);
     var net_income_per_month = GetNetMonthlyIncome(all_deposits, [all_purchases, all_withdrawals, all_bills])
     var total_expenses = (all_purchases["total"] + all_withdrawals["total"] + all_bills["total"]);
-    var final_chart_data = {
+    window.final_chart_data = {
         "income": all_deposits["total"],
         "expenses": total_expenses,
-        "net income": all_deposits["total"] - total_expenses
+        "net_income": all_deposits["total"] - total_expenses
     };
+
+    window.data = {
+        labels: ["Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug"],
+        datasets: [
+            {
+                label: "Net Monthly Income",
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "#da253d",
+                borderColor: "#da253d",
+                borderCapStyle: 'butt',
+                borderDash: [],
+                borderDashOffset: 0.0,
+                borderJoinStyle: 'miter',
+                pointBorderColor: "#da253d",
+                pointBackgroundColor: "#fff",
+                pointBorderWidth: 1,
+                pointHoverRadius: 5,
+                pointHoverBackgroundColor: "#da253d",
+                pointHoverBorderColor: "rgba(220,220,220,1)",
+                pointHoverBorderWidth: 2,
+                pointRadius: 1,
+                pointHitRadius: 10,
+                data: net_income_per_month,
+                spanGaps: false,
+            }
+        ]
+    };
+    
+    window.data2 = {
+        labels: [
+            "Food",
+            "Groceries",
+            "Shopping",
+            "Entertainment",
+            "Withdrawls",
+            "Bills"
+        ],
+        datasets: [
+            {
+                data: [300, 50, 100, 90, 200, 250],
+                backgroundColor: [
+                    "#da253d",
+                    "#56AEE2",
+                    "#e2cf56",
+                    "#56E289",
+                    "#8A56E2",
+                    "#E28956"
+                ],
+                hoverBackgroundColor: [
+                    "#E25668",
+                    "#2598da",
+                    "#ffff80",
+                    "#25da67",
+                    "#6725da",
+                    "#da6725"
+                ]
+            }]
+    };
+
+
+
+    return average_monthly_income;
 };

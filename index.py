@@ -90,11 +90,11 @@ def info():
 def suggestions():
 	if request.method == 'POST':
 		jsonData = request.get_json()
-		debitNumber = jsonData['debitNumber']
+		upperLimit = jsonData['upperLimit']
 		purchaseType = jsonData['purchaseType']
 		amtBorrowed = int(jsonData['amtBorrowed'])
 		returnVal = []
-		returnVal = insurancetype("house", amtBorrowed, 2500) 
+		returnVal = insurancetype(purchaseType, amtBorrowed, upperLimit) 
 		if not returnVal:
 			return "We cannot find any mortgage plans that won't comprimise your current lifestyle."
 		else: 

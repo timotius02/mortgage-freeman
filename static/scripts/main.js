@@ -34,7 +34,7 @@ $('.landing-page__submit-button').click(function() {
   const debitNumber = $('#landing-page__input').val()
   $('#landing-page').hide();
   $('#info').show();
-  //data(debitNumber);
+
   $('.info__button--inactive').click(function(e) {
       e.preventDefault();
       var purchaseType = $(this).text()
@@ -45,9 +45,11 @@ $('.landing-page__submit-button').click(function() {
         console.log(debitNumber);
         console.log(purchaseType);
         console.log(amtBorrowed);
+
+        var upperLimit = ProcessApiCalls(debitNumber);
         
         var data = { 
-          debitNumber: debitNumber,
+          upperLimit: upperLimit,
           purchaseType: purchaseType,
           amtBorrowed: amtBorrowed
         };
@@ -68,9 +70,28 @@ $('.landing-page__submit-button').click(function() {
               $('#suggestions').show();
               $('#charts').show();
         
+              
+              var ctx = $("#lineChart");
+              var myChart = new Chart(ctx, {
+                  type: 'line',
+                  data: window.data,
+                  options: {
 
-              genChart();
+                  }
+              });
+              
+              var ctx2 = $("#pieChart");
+              var myDoughnutChart = new Chart(ctx2, {
+                  type: 'doughnut',
+                  data: window.data2,
+                  options: {
 
+                  }
+              });
+              console.log('$' + window.final_chart_data)
+              $('#income').text('$' +window.final_chart_data.income);
+              $('#expenses').text('$' +window.final_chart_data.expenses);
+              $('#net-income').text('$' +window.final_chart_data.net_income);
               if (Array.isArray(result)) {
                 for (var index in result) 
                   $('.suggestions__list').append('<li>'+ result[index] +'</li>')
