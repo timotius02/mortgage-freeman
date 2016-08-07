@@ -59,7 +59,26 @@ $('.landing-page__submit-button').click(function() {
             dataType : 'json',
             data: JSON.stringify(data),
             success : function(result) {
-              console.log('success') 
+              if (Array.isArray(result))
+                console.log(result)
+              else 
+                console.log(result) 
+ 
+              $('#info').hide();
+              $('#suggestions').show();
+              $('#charts').show();
+        
+
+              genChart();
+
+              if (Array.isArray(result)) {
+                for (var index in result) 
+                  $('.suggestions__list').append('<li>'+ result[index] +'</li>')
+              }
+              else {
+                $('.suggestions__list').append('<li>'+ result+'</li>')
+              }
+              
             },
             error: function(result) {
                console.log(result);

@@ -223,6 +223,7 @@ input {
     width: 200px; }
 
 #suggestions {
+  display: none;
   position: relative; }
   #suggestions .suggestions__list {
     font-size: 1.3em;
@@ -240,23 +241,25 @@ input {
       #suggestions .suggestions__footer a:hover {
         text-decoration: underline; }
 
-#charts .charts-one-two, #charts .chart-three {
-  margin-top: 50px; }
-  #charts .charts-one-two .charts__inline-charts, #charts .chart-three .charts__inline-charts {
-    display: inline-block;
-    margin: 0 30px;
-    float: left; }
-#charts .chart-three {
-  border: 2px solid #333; }
-  #charts .chart-three div[class^="chart-three__"] {
-    float: left;
-    padding: 1em 3em; }
-    #charts .chart-three div[class^="chart-three__"] h4 {
-      text-decoration: underline; }
-    #charts .chart-three div[class^="chart-three__"] p {
-      margin-top: 5px; }
-    @media only screen and (max-width: 700px) {
-      #charts .chart-three div[class^="chart-three__"] {
-        float: none; } }
+#charts {
+  display: none; }
+  #charts .charts-one-two, #charts .chart-three {
+    margin-top: 50px; }
+    #charts .charts-one-two .charts__inline-charts, #charts .chart-three .charts__inline-charts {
+      display: inline-block;
+      margin: 0 30px;
+      float: left; }
+  #charts .chart-three {
+    border: 2px solid #333; }
+    #charts .chart-three div[class^="chart-three__"] {
+      float: left;
+      padding: 1em 3em; }
+      #charts .chart-three div[class^="chart-three__"] h4 {
+        text-decoration: underline; }
+      #charts .chart-three div[class^="chart-three__"] p {
+        margin-top: 5px; }
+      @media only screen and (max-width: 700px) {
+        #charts .chart-three div[class^="chart-three__"] {
+          float: none; } }
 
 /*# sourceMappingURL=main.css.map */

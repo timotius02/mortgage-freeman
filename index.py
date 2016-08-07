@@ -1,5 +1,6 @@
 from flask import Flask, request
 from collections import namedtuple
+import json
 
 fixedplans = namedtuple("fixedplans", "discrate irate period")
 
@@ -47,7 +48,6 @@ def adjrate(amtborrowed):
 def insurancetype(purchase, amtborrowed, upperlimit):
     fp = fixrate(amtborrowed)
     ap = adjrate(amtborrowed)
-
     retval = 0
     if purchase == "house":
         # monthly payment + monthly property tax + monthly insurance
@@ -93,7 +93,12 @@ def suggestions():
 		debitNumber = jsonData['debitNumber']
 		purchaseType = jsonData['purchaseType']
 		amtBorrowed = int(jsonData['amtBorrowed'])
-		return insurancetype(purchaseType, amtBorrowed, 500)
+		returnVal = []
+		returnVal = insurancetype("house", amtBorrowed, 2500) 
+		if not returnVal:
+			return "We cannot find any mortgage plans that won't comprimise your current lifestyle."
+		else: 
+			return json.dumps(returnVal)
 	else:
 		return app.send_static_file('pages/suggestions.html')
 

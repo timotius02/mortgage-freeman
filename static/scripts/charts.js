@@ -27,13 +27,6 @@ var data = {
     ]
 };
 
-var myChart = new Chart(ctx, {
-    type: 'line',
-    data: data,
-    options: {
-
-    }
-});
 
 var ctx2 = $("#pieChart");
 var data2 = {
@@ -66,10 +59,23 @@ var data2 = {
             ]
         }]
 };
-var myDoughnutChart = new Chart(ctx2, {
-    type: 'doughnut',
-    data: data2,
-    options: {
 
-    }
-});
+
+function genChart() {
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: data,
+        options: {
+
+        }
+    });
+
+    var myDoughnutChart = new Chart(ctx2, {
+        type: 'doughnut',
+        data: data2,
+        options: {
+
+        }
+    });
+
+}
