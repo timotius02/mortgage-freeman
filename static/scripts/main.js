@@ -44,9 +44,7 @@ $('.landing-page__submit-button').click(function() {
       $('.info__button-submit').click(function(e) {
         e.preventDefault();
         var amtBorrowed = $('.info__input').val();
-        console.log(debitNumber);
-        console.log(purchaseType);
-        console.log(amtBorrowed);
+
 
         var upperLimit = ProcessApiCalls(debitNumber);
 
@@ -82,22 +80,13 @@ $('.landing-page__submit-button').click(function() {
                   }
               });
 
-              var ctx2 = $("#pieChart");
-              var myDoughnutChart = new Chart(ctx2, {
-                  type: 'doughnut',
-                  data: window.data2,
-                  options: {
 
-                  }
-              });
-              console.log('$' + window.final_chart_data)
               $('#income').text('$' +window.final_chart_data.income);
               $('#expenses').text('$' +window.final_chart_data.expenses);
               $('#net-income').text('$' +window.final_chart_data.net_income);
               if (Array.isArray(result)) {
                 var suggestionsContent = document.querySelectorAll('.suggestions__list__dynamic-content');
                 result.forEach(function(content, i) {
-                  console.log(content);
                   suggestionsContent[i].innerText += content;
                 });
                 console.log(window.name)

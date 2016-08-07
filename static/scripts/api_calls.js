@@ -158,6 +158,7 @@ var ProcessApiCalls = function (account_number) {
     withdrawals.done(function (results) {
         all_withdrawals = SumProperty(results, "amount","transaction_date");
         all_categories["withdrawals"] = all_withdrawals["total"];
+        console.log(all_categories)
     })
 
     var deposits_url = base_url + '/accounts/' + chequing_account_id + '/deposits?key=' + api_key;
@@ -210,18 +211,21 @@ var ProcessApiCalls = function (account_number) {
         ]
     };
 
+    var keys = Object.keys(all_categories);
+    var values = [];
+    console.log(all_categories)
+
+    console.log(keys)
+    for (var i = 0; i < keys.length; i++) {
+        values.push(all_categories[keys[i]])
+    }
+
+    console.log(values)
     window.data2 = {
-        labels: [
-            "Food",
-            "Groceries",
-            "Shopping",
-            "Entertainment",
-            "Withdrawls",
-            "Bills"
-        ],
+        labels: keys,
         datasets: [
             {
-                data: [300, 50, 100, 90, 200, 250],
+                data: values,
                 backgroundColor: [
                     "#da253d",
                     "#56AEE2",
@@ -240,7 +244,15 @@ var ProcessApiCalls = function (account_number) {
                 ]
             }]
     };
+    
+    var ctx2 = $("#pieChart");
+      var myDoughnutChart = new Chart(ctx2, {
+          type: 'doughnut',
+          data: window.data2,
+          options: {
 
+          }
+      });
 
 
     return average_monthly_income;
