@@ -40,8 +40,8 @@ def fixrate(amtborrowed):
 def adjrate(amtborrowed):
     adjpayments = []
     adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate40k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.75%"])
-    adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.875%"])
-    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.875%"])
+    adjpayments.append([(amtborrowed * 0.03412 / (1 - 1 / (1 + sevenyradjrate40k) ** 30))/12, "with a 7-year Adjustable plan starting at 2.88%"])
+    adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + fiveyradjrate60k) ** 30))/12, "with a 5-year Adjustable plan starting at 2.88%"])
     adjpayments.append([(amtborrowed * 0.03456 / (1 - 1 / (1 + sevenyradjrate60k) ** 30))/12, "with a 7-year Adjustable plan starting at 3.00%"])
     return adjpayments
 
@@ -68,10 +68,10 @@ def insurancetype(purchase, amtborrowed, upperlimit):
     retval = []
     for i in listfinal:
         if isinstance(i[1], str):
-            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + i[1])
+            retval.append([round(i[0], 2),  int(i[1][7]), "adjustable", float(i[1][-5:-1])])
             #print("Your monthly payment would be %.2f, %s" % (round(i[0], 2), i[1]))
         else:
-            retval.append("Your monthly payment would be $" + str(round(i[0], 2)) + " " + "with a " + str(i[1][1]) + "-year Fixed Rate of " + str(round(i[1][0]*100, 3)) + "%")
+            retval.append([round(i[0], 2), i[1][1] , "fixed",  round(i[1][0]*100, 2)])
             #print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
     return retval
 
@@ -94,10 +94,10 @@ def suggestions():
 		purchaseType = jsonData['purchaseType']
 		amtBorrowed = int(jsonData['amtBorrowed'])
 		returnVal = []
-		returnVal = insurancetype(purchaseType, amtBorrowed, upperLimit) 
+		returnVal = insurancetype(purchaseType, amtBorrowed, upperLimit)
 		if not returnVal:
 			return "We cannot find any mortgage plans that won't comprimise your current lifestyle."
-		else: 
+		else:
 			return json.dumps(returnVal)
 	else:
 		return app.send_static_file('pages/suggestions.html')
