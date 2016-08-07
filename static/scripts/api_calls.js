@@ -1,25 +1,24 @@
 var api_key = "1d8849cbf874b8e5a4d2431bc879359b";
 var base_url = 'http://api.reimaginebanking.com';
 
-function ApiCall(url) { 
+function ApiCall(url) {
     return $.ajax({
         url: url,
         async: false
     });
 }
 
-function SumProperty(data_array, property) {
+function SumProperty(data_array, property, date_type) {
     var year_ago = GetYearAgo();
     var total = 0.0;
-    var months = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var months = [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0];
     for (var i = 0; i < data_array.length; i++) {
         if (data_array[i]["medium"] == "balance") {
-            date = new Date(data_array[i]["transaction_date"] + " 04:00:00");
-            if (date > year_ago) {
+            date = new Date(data_array[i][date_type] + " 04:00:00");
+            if (date >= year_ago) {
                 var month = date.getMonth();
-                months[month] += data_array[i][property];
-                //TODO break into categories
-                total += data_array[i][property];
+                months[month] += parseFloat(data_array[i][property]);
+                total += parseFloat(data_array[i][property]);
             }
         }
     }
@@ -29,14 +28,14 @@ function SumProperty(data_array, property) {
 function SumBills(bills) {
     var year_ago = GetYearAgo();
     var total = 0.0;
-    var months = [0,0,0,0,0,0,0,0,0,0,0,0];
+    var months = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0];
     for (var i = 0; i < bills.length; i++) {
         date = new Date(bills[i]["payment_date"] + " 04:00:00");
         if (date > year_ago) {
             if (bills[i]["status"] == "completed") {
                 var month = date.getMonth();
-                months[month] += bills[i]["payment_amount"];
-                total += bills[i]["payment_amount"];
+                months[month] += parseFloat(bills[i]["payment_amount"]);
+                total += parseFloat(bills[i]["payment_amount"]);
             }
         }
     }
@@ -47,12 +46,11 @@ function GetCategories(purchases, merchants) {
     var year_ago = GetYearAgo();
     var categories = new Array();
     for (var i = 0; i < purchases.length; i++) {
-        date = new Date(purchases[i]["transaction_date"] + " 04:00:00");
+        date = new Date(purchases[i]["purchase_date"] + " 04:00:00");
         if (date > year_ago) {
             for (var j = 0; j < merchants.length; j++) {
                 if (purchases[i]["merchant_id"] == merchants[j]["_id"]) {
                     if (!categories[merchants[j]["category"]]) {
-                        categories.push(merchants[j]["category"]);
                         categories[merchants[j]["category"]] = 0;
                     }
                     categories[merchants[j]["category"]] += purchases[i]["amount"];
@@ -66,9 +64,10 @@ function GetCategories(purchases, merchants) {
 function GetAverageIncome(positives, negatives) {
     var net = positives["total"];
     for (var i = 0; i < negatives.length; i++) {
-        net -= negatives["total"];
+        net -= negatives[i]["total"];
     }
-    return net/12;
+    var income = net / 12.0;
+    return income;
 }
 
 function GetNetMonthlyIncome(positives, negatives) {
@@ -117,39 +116,35 @@ var data = function (account_number) {
     var promise = ApiCall(all_accounts_url);
     var chequing_account_id = '';
     promise.success(function (results) {
-        chequing_account_id = GetAccount(results,account_number);
+        chequing_account_id = GetAccount(results, account_number);
     })
 
     var purchases_url = base_url + '/accounts/' + chequing_account_id + '/purchases?key=' + api_key;
     var purchases = ApiCall(purchases_url);
     purchases.success(function (results) {
-        all_purchases = SumProperty(results, "amount");
+        all_purchases = SumProperty(results, "amount","purchase_date");
         all_categories = GetCategories(results, merchants);
     })
-
     var withdrawals_url = base_url + '/accounts/' + chequing_account_id + '/withdrawals?key=' + api_key;
     var withdrawals = ApiCall(withdrawals_url);
     withdrawals.success(function (results) {
-        all_withdrawals = SumProperty(results, "amount");
-        all_categories.push("withdrawals");
+        all_withdrawals = SumProperty(results, "amount","transaction_date");
         all_categories["withdrawals"] = all_withdrawals["total"];
     })
 
     var deposits_url = base_url + '/accounts/' + chequing_account_id + '/deposits?key=' + api_key;
     var deposits = ApiCall(deposits_url);
     deposits.success(function (results) {
-        all_deposits = SumProperty(deposits, "amount");
+        all_deposits = SumProperty(results, "amount", "transaction_date");
     })
 
     var bills_url = base_url + '/accounts/' + chequing_account_id + '/bills?key=' + api_key;
     var bills = ApiCall(bills_url);
     bills.success(function (results) {
         all_bills = SumBills(results);
-        all_categories.push("bills");
         all_categories["bills"] = all_bills["total"];
     })
-    console.log(all_purchases);
-
+    
     var average_monthly_income = GetAverageIncome(all_deposits, [all_purchases, all_withdrawals, all_bills]);
     var net_income_per_month = GetNetMonthlyIncome(all_deposits, [all_purchases, all_withdrawals, all_bills])
     var total_expenses = (all_purchases["total"] + all_withdrawals["total"] + all_bills["total"]);
