@@ -209,16 +209,18 @@ input {
   width: 160px;
   position: absolute; }
 
-#info .info__buttons {
-  margin-top: 25px; }
-  #info .info__buttons .info__button--inactive {
-    margin: 0 5px;
-    padding: 0.9em 2.7em; }
-#info input, #info .info__button-submit {
+#info {
   display: none; }
-#info .info__button-submit {
-  margin-top: 10px;
-  width: 200px; }
+  #info .info__buttons {
+    margin-top: 25px; }
+    #info .info__buttons .info__button--inactive {
+      margin: 0 5px;
+      padding: 0.9em 2.7em; }
+  #info input, #info .info__button-submit {
+    display: none; }
+  #info .info__button-submit {
+    margin-top: 10px;
+    width: 200px; }
 
 #suggestions {
   position: relative; }

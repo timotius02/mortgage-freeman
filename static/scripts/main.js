@@ -31,7 +31,40 @@ $('.suggestions__footer-link').click(function() {
 // capital one login
 $('.landing-page__submit-button').click(function() {
   event.preventDefault();
-  const debitNumber = $('landing-page__id');
-  data(debitNumber);
-  window.location.href = window.location.hostname + '/pages/info.html';
+  const debitNumber = $('#landing-page__input').val()
+  $('#landing-page').hide();
+  $('#info').show();
+  //data(debitNumber);
+  $('.info__button--inactive').click(function(e) {
+      e.preventDefault();
+      var purchaseType = $(this).text()
+
+      $('.info__button-submit').click(function(e) {
+        e.preventDefault();
+        var amtBorrowed = $('.info__input').val();
+        console.log(debitNumber);
+        console.log(purchaseType);
+        console.log(amtBorrowed);
+        
+        var data = { 
+          debitNumber: debitNumber,
+          purchaseType: purchaseType,
+          amtBorrowed: amtBorrowed
+        };
+
+        $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: '/suggestions',
+            dataType : 'json',
+            data: JSON.stringify(data),
+            success : function(result) {
+              console.log('success') 
+            },
+            error: function(result) {
+               console.log(result);
+            }
+        });
+      })
+  })
 });
