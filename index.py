@@ -72,10 +72,16 @@ def insurancetype(purchase, amtborrowed, upperlimit):
     retval = []
     for i in listfinal:
         if isinstance(i[1], str):
-            retval.append([round(i[0], 2),  int(i[1][7]), "adjustable", float(i[1][-5:-1])])
+            retval.append(round(i[0], 2))
+            retval.append(int(i[1][7]))
+            retval.append("adjustable")
+            retval.append(float(i[1][-5:-1]))
             #print("Your monthly payment would be %.2f, %s" % (round(i[0], 2), i[1]))
         else:
-            retval.append([round(i[0], 2), i[1][1] , "fixed",  round(i[1][0]*100, 2)])
+            retval.append(round(i[0], 2))
+            retval.append(i[1][1])
+            retval.append("fixed")
+            retval.append(round(i[1][0]*100, 2))
             #print("Your monthly payment would be %.2f, with a %d-year Fixed Rate of %.3f%%" % (round(i[0], 2), i[1][1], 100 * i[1][0]))
     return retval
 
