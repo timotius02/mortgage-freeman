@@ -143,7 +143,7 @@ var ProcessApiCalls = function (account_number) {
     var name = "";
     var customer_url = base_url + '/accounts/'+ chequing_account_id + '/customer?key=' + api_key;
     var customer = ApiCall(customer_url);
-    customer.success(function (results) {
+    customer.done(function (results) {
         name = GetName(results);
     })
 
