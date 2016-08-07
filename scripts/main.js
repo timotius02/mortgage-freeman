@@ -22,5 +22,8 @@ $('.info__button--inactive').click(function(event) {
 });
 
 $('.suggestions__footer-link').click(function() {
-  $("html, body").animate({ scrollTop: "800px" });
+  $("html, body").animate(
+    { scrollTop: "800px" },
+    800
+  );
 });
