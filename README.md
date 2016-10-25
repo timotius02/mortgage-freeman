@@ -1,6 +1,7 @@
 # Mortgage-Freeman
 A personalized web app to get  quick mortgage quotes and plan suggestions, without compromising your spending habits
 
+![Mortgage-Freeman](https://challengepost-s3-challengepost.netdna-ssl.com/photos/production/software_photos/000/399/904/datas/gallery.jpg "Mortgage-Freeman Screenshot")
 # Try it out
 - Fork our repo
 - install requirements.txt
